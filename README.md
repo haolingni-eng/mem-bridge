@@ -93,6 +93,21 @@ Each agent is connected through its **own native surface** — a rules file, a p
 | Secrets are rejected at write time | Memory is long-lived; a leaked key in a daily log is forever |
 | Raw data stays read-only; outputs go to new files | An agent must never silently overwrite source data |
 
+## Demo
+
+```bash
+./demo/demo.sh              # paced run, safe to record (throwaway store in /tmp)
+PAUSE=0 ./demo/demo.sh      # no pauses
+python3 demo/render_cast.py # renders demo/membridge-demo.mp4 from a real run
+```
+
+- `demo/demo.sh` — the whole story: empty store → agent A writes → agent B starts cold and
+  finds it → the prompt block → secret refusal + concurrent writes → contract check.
+- `demo/storyboard.md` — a three-minute shot list with narration, for recording with a voice.
+- `demo/render_cast.py` — renders the real output into a silent 16:9 MP4 (terminal-screencast
+  style). Nothing is invented: the lines come from an actual run.
+- `demo/youtube.md` — title, description, chapters and settings for the upload.
+
 ## Verifying
 
 ```bash

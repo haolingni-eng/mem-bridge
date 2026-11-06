@@ -4,3 +4,4 @@ memory/
 .search-index/
 *.lock
 .DS_Store
+*.mp4
