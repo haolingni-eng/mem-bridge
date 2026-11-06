@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+memory/
+.search-index/
+*.lock
+.DS_Store
