@@ -1,0 +1,13 @@
+{
+  "name": "Verify mem.py after every edit",
+  "description": "Runs the end-to-end self check against a throwaway store: protocol output, retrieval, the five-field write path, secret rejection and concurrent appends. A red run means the write path or the store contract regressed, so stop before the next task.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["mem.py", "scripts/*.py"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "python3 scripts/selfcheck.py"
+  }
+}

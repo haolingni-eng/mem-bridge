@@ -93,6 +93,31 @@ Each agent is connected through its **own native surface** — a rules file, a p
 | Secrets are rejected at write time | Memory is long-lived; a leaked key in a daily log is forever |
 | Raw data stays read-only; outputs go to new files | An agent must never silently overwrite source data |
 
+## Verifying
+
+```bash
+python3 scripts/selfcheck.py
+```
+
+Runs against a throwaway store and checks the contract end to end: protocol output,
+retrieval, the five-field write path, secret rejection (nothing reaches disk), and five
+concurrent appends all landing intact.
+
+## Working in Kiro
+
+The Kiro configuration lives at the repository root, not hidden by `.gitignore`:
+
+| Path | What it holds |
+|---|---|
+| `.kiro/steering/` | product, tech and structure notes, loaded into every spec session |
+| `.kiro/specs/shared-memory-layer/` | the feature spec: requirements in EARS form, design, task plan |
+| `.kiro/hooks/verify-after-edit.kiro.hook` | runs `scripts/selfcheck.py` whenever `mem.py` or a test changes |
+| `.kiro/hooks/verify-adapter.kiro.hook` | on demand: probes whether an agent actually loaded the protocol |
+
+The steering files stop a session from re-litigating settled decisions (no pip installs, no
+daemon, writes only through `append`). The spec is written before the code and the task file
+is checked off as work lands, so a fresh session can resume mid-feature instead of guessing.
+
 ## Status
 
 Working, used daily across six agents. Retrieval is a weighted lexical search (BM25-style scoring with an index-first bias); an optional embedding backend can be configured for hybrid retrieval.

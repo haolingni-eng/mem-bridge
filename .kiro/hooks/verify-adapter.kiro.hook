@@ -1,0 +1,12 @@
+{
+  "name": "Check an adapter before trusting it",
+  "description": "Config files are not proof that an agent reads them. This runs a fresh-session probe: the target agent is asked to print the protocol and search for a known entry. If it answers without a hit, the adapter is being ignored.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Verify a MemBridge adapter without assuming it works.\n\n1. Run `python3 mem.py protocol` and paste the first five lines.\n2. Run `python3 mem.py search acceptance` and quote one hit with its path:line.\n3. State plainly whether the protocol was already in your context before step 1, or whether you only learned it by running the command.\n\nIf the protocol was not in your context, say so — that adapter is not loading and the fix is to paste AGENTS.memory.md into that agent's global rules, or to use `mem.py inject` at dispatch time."
+  }
+}
